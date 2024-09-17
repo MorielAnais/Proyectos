@@ -1,0 +1,99 @@
+import os
+
+# Inicializa variables
+x = 0
+y = 0
+os.system("clear")
+
+# Definir los campus
+campus = ("zona core", "campus uno", "campus matriz", "sector outsourcing")
+
+# Mostrar el menú principal
+print("¿Qué quiere hacer?")
+print("1. Ver los dispositivos.")
+print("2. Ver los campus.")
+print("3. Añadir dispositivo.")
+print("4. Añadir campus.")
+print("5. Borrar dispositivo.")
+print("6. Borrar campus")
+
+# Obtener la selección del usuario
+selector = int(input("Elija una opción: "))
+
+if selector == 1:
+    os.system("clear")
+    y = 1
+    print("Elija un campus:\n")
+    for index, item in enumerate(campus, start=1):
+        print(f"{index}. {item}")
+
+    selector = int(input("\nElija una opción: ")) - 1
+    if 0 <= selector < len(campus):
+        os.system("clear")
+        try:
+            with open(campus[selector] + ".txt", "r") as file:
+                for item in file:
+                    print(item.strip())
+        except FileNotFoundError:
+            print("El archivo no existe.")
+    
+elif selector == 2:
+    os.system("clear")
+    print("Campus disponibles:\n")
+    for index, item in enumerate(campus, start=1):
+        print(f"{index}. {item}")
+
+elif selector == 3:
+    os.system("clear")
+    servicios = []
+    print("¿Dónde agregar nuevo dispositivo?\n")
+    for index, item in enumerate(campus, start=1):
+        print(f"{index}. {item}")
+
+    selector = int(input("\nElija una opción: ")) - 1
+    if 0 <= selector < len(campus):
+        os.system("clear")
+        print("Elija un dispositivo:\n")
+        print("1. Router.")
+        print("2. Switch.")
+        print("3. Switch multicapa.")
+        tipo_dispositivo = int(input("Elija su opción: "))
+
+        print("Agregue el nombre de su dispositivo:")
+        nombre_dispositivo = input("Agregue su nombre: ")
+
+        while True:
+            print("¿Confirma este nombre?\n1. Sí\n2. No")
+            confirmar_nombre = input("Introduzca su respuesta: ")
+            if confirmar_nombre == "1":
+                print("Nombre confirmado.")
+                break
+        
+        print("Elija una jerarquía:\n1. Núcleo\n2. Acceso\n3. Distribución")
+        jerarquia = int(input("Elija una opción: "))
+
+        os.system("clear")
+        with open(campus[selector] + ".txt", "a") as file:
+            file.write("\n---------------------------------\n")
+            if tipo_dispositivo == 1:
+                print("Elija un servicio de red para el router:\n1. Datos\n2. Salir")
+                while True:
+                    servicio = int(input("Elija una opción: "))
+                    if servicio == 1:
+                        servicios.append("Datos")
+                    elif servicio == 2:
+                        break
+
+                file.write(f"Router: {nombre_dispositivo}\n")
+                
+            elif tipo_dispositivo == 2:
+                print("Elija un servicio de red para el switch:\n1. Datos\n2. VLAN\n3. Trunking\n4. Salir")
+                while True:
+                    servicio = int(input("Elija una opción: "))
+                    if servicio == 1:
+                        servicios.append("Datos")
+                    elif servicio == 2:
+                        servicios.append("VLAN")
+                    elif servicio == 3:
+                        servicios.append("Trunking")
+     
